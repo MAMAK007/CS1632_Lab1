@@ -13,6 +13,7 @@ class MArray {
         try {
             FileReader filereader = new FileReader(fileName);
             CSVReader csvReader = new CSVReader(filereader);
+            
             List<String[]> allData = csvReader.readAll();
             for (String[] row : allData) {
                 for (String cell : row) {
@@ -20,6 +21,7 @@ class MArray {
                 }
                 System.out.println();
             }
+            csvReader.close();
         }
         catch (Exception e) {
             e.printStackTrace();
