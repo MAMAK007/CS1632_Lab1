@@ -24,7 +24,8 @@ class MArray {
             csvReader.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+        	// Unused
+            // e.printStackTrace();
         }
     }
 }
