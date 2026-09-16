@@ -11,8 +11,5 @@ public class Main {
        
        // Start by initializing the CSV file
        session.read();
-       
-       // Begin query
-       session.query();
     }
 }
