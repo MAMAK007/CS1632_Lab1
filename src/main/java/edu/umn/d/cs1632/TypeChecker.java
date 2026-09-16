@@ -30,11 +30,11 @@ public class TypeChecker {
 			if (getType(index.get(0)).equals(getType(index.get(i)))) {
 				continue;
 			} else {
-				return "Data Types: (Multiple Data Types)";
+				return "\n---------\nData Types: (Multiple Data Types)";
 			}
 		}
     	
-    	return "Data Types: (All " + getType(index.get(0))+ "s)";
+    	return "\n---------\nData Types: (All " + getType(index.get(0))+ "s)";
 	}
     
 }
