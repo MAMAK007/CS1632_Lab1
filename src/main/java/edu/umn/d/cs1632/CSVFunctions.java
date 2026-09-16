@@ -1,5 +1,6 @@
 package edu.umn.d.cs1632;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,19 +40,28 @@ public class CSVFunctions {
 		
 		// Ask for file to open in src/data
 		while (true) {
-        	System.out.print("What file do you want to view? (place in src/data directory)\n> ");
+        	System.out.print("What file do you want to view? (place in src/data directory or type 'q' to quit)\n> ");
             workingFile = "src/data/" + sc.nextLine();
-            try {
-	            MArray mArray = new MArray(workingFile);
-	            break;
-            } catch (Exception e) {
-            	;
+            
+            if (workingFile.equalsIgnoreCase("src/data/q")) {
+            	break;
             }
-		}
-		// Create file reader, pipe file reader location into CSV reader
-		fileReader = new FileReader(workingFile);
-		csvReader = new CSVReader(fileReader);
-		
+            
+            try {
+            	// Print the matrix
+	            MArray mArray = new MArray(workingFile);
+	            
+	            // Create file reader, pipe file reader location into CSV reader
+	    		fileReader = new FileReader(workingFile);
+	    		csvReader = new CSVReader(fileReader);
+	    		
+	    		// Begin query function
+	    		query();
+	    		break;
+            } catch (Exception e) {
+            	System.out.println("\nFile does not exist!");
+            }
+		}	
 	}
 	
 	// Query prompt
@@ -64,14 +74,15 @@ public class CSVFunctions {
 		// Loop repeats for continuous prompting unless closed with Q
 		while (true) {
 			System.out.println();
-	        System.out.print("Query?\n> ");
+			System.out.println("Enter your Query for data types");
+	        System.out.print("(FORMAT: [V/H/M] [A] [B] [C] [D (if doing M query)]) or type 'q' to quit\n> ");
 	        // Typed user response
 	        String userInput = sc.nextLine();
 	        // Trimmed user response, creates array of words/numbers/values separated by spaces
 	        String[] splitInput = userInput.split("\\s+");       	
 		        
 	        // Vertical selection
-        	if (splitInput[0].equalsIgnoreCase("V") || splitInput.length == 3) {
+        	if (splitInput[0].equalsIgnoreCase("V") && splitInput.length == 4) {
 	        	
         		try {
         			// Request user for desired Column, RowStart, and RowEnd
@@ -119,7 +130,7 @@ public class CSVFunctions {
         		}
         			
         	// Horizontal selection
-	        } else if (splitInput[0].equalsIgnoreCase("H") || splitInput.length == 3) {
+	        } else if (splitInput[0].equalsIgnoreCase("H") && splitInput.length == 4) {
 	        	try {
 	        		// Request user for desired Row, ColStart, and ColEnd
         			int inputRow = Integer.parseInt(splitInput[1]);
@@ -169,7 +180,7 @@ public class CSVFunctions {
         		}
 	        	
 	        // Matrix selection	
-	        } else if (splitInput[0].equalsIgnoreCase("M") || splitInput.length == 4) {
+	        } else if (splitInput[0].equalsIgnoreCase("M") && splitInput.length == 5) {
 	        	try {
 	        		// Request user for desired RowStart, RowEnd, ColStart, and ColEnd
         			int inputRowStart = Integer.parseInt(splitInput[1]);
@@ -229,6 +240,7 @@ public class CSVFunctions {
 	        // Quit the program
 	        } else if (splitInput[0].equalsIgnoreCase("Q")) {
 	        	break;
+	        	
 	        } else {
 	        	invalidSel();
 	        }
